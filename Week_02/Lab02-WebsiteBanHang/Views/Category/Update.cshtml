@@ -1,0 +1,20 @@
+@model Lab02_WebsiteBanHang.Models.Category
+
+<div class="container mt-4">
+    <h2>Edit Category</h2>
+
+    <form asp-action="Update" method="post" class="card p-4">
+        <input type="hidden" asp-for="Id"/>
+
+        <div class="form-group">
+            <label asp-for="Name" class="font-weight-bold"></label>
+            <input asp-for="Name" class="form-control">
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
