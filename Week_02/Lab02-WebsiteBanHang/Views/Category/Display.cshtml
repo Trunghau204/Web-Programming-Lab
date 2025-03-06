@@ -1,10 +1,21 @@
 @model Lab02_WebsiteBanHang.Models.Category
 
-<div class="container mt-4">
-    <div class="card p-4 text-center">
-        <h2>Category Details</h2>
-        <hr>
-        <h4><strong>Name:</strong> @Model.Name</h4>
+@{
+    ViewData["Title"] = "Category Details";
+}
+
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="card shadow-lg p-4" style="width: 600px; border-radius: 15px; border: none;">
+        <h2 class="text-center mb-4 text-primary fw-bold">Category Details</h2>
+        <div class="card shadow-sm p-4 rounded-3">
+            <div class="d-flex align-items-center">
+                <span class="fw-semibold text-muted me-2">Name:</span>
+                <span>@Model.Name</span>
+            </div>
+        </div>
+
+        <div class="mt-4 text-center">
+            <a asp-action="Index" class="btn btn-outline-secondary btn-lg rounded-pill shadow-sm fw-semibold px-5">Back</a>
+        </div>
     </div>
-    <a asp-action="Index" class="btn btn-primary mt-3">Back to List</a>
 </div>

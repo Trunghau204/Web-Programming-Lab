@@ -22,15 +22,17 @@
 
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="fw-bold">Category List</h2>
-        <a asp-action="Add" class="btn btn-primary">
-            <i class="bi bi-plus-lg"></i> Add New Category
+        <h2 class="fw-bold">
+            <i class="fas fa-tags"></i> Category List
+        </h2>
+        <a asp-action="Add" class="btn btn-primary btn-lg shadow-sm">
+            <i class="bi bi-plus-lg"></i> Add Category
         </a>
     </div>
 
     <div class="table-responsive">
-        <table class="table table-hover table-bordered align-middle">
-            <thead class="table-dark text-center">
+        <table class="table table-hover table-bordered align-middle shadow-sm">
+            <thead class="table-primary text-center">
                 <tr>
                     <th>Name</th>
                     <th>Actions</th>
@@ -40,17 +42,19 @@
                 @foreach (var category in Model)
                 {
                     <tr>
-                        <td>@category.Name</td>
+                        <td class="fw-bold">@category.Name</td>
                         <td class="text-center">
-                            <a asp-action="Display" asp-route-id="@category.Id" class="btn btn-info btn-sm">
-                                <i class="bi bi-eye"></i> View
-                            </a>
-                            <a asp-action="Update" asp-route-id="@category.Id" class="btn btn-warning btn-sm">
-                                <i class="bi bi-pencil-square"></i> Edit
-                            </a>
-                            <a asp-action="Delete" asp-route-id="@category.Id" class="btn btn-danger btn-sm">
-                                <i class="bi bi-trash"></i> Delete
-                            </a>
+                            <div class="d-flex justify-content-center gap-2">
+                                <a asp-action="Display" asp-route-id="@category.Id" class="btn btn-outline-info btn-sm shadow-sm">
+                                    <i class="fas fa-eye"></i> View
+                                </a>
+                                <a asp-action="Update" asp-route-id="@category.Id" class="btn btn-outline-warning btn-sm shadow-sm">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@category.Id" class="btn btn-outline-danger btn-sm shadow-sm">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
+                            </div>
                         </td>
                     </tr>
                 }
@@ -58,3 +62,43 @@
         </table>
     </div>
 </div>
+
+<!-- FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+    .btn {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-weight: 500;
+    }
+
+    .btn-outline-info:hover {
+        background-color: #0dcaf0 !important;
+        color: white !important;
+    }
+
+    .btn-outline-warning:hover {
+        background-color: #ffc107 !important;
+        color: white !important;
+    }
+
+    .btn-outline-danger:hover {
+        background-color: #dc3545 !important;
+        color: white !important;
+    }
+
+    table {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    th {
+        text-transform: uppercase;
+    }
+
+    tbody tr:hover {
+        background-color: #f8f9fa;
+    }
+</style>
