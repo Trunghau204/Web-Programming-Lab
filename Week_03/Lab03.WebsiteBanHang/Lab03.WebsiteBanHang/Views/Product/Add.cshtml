@@ -1,0 +1,149 @@
+﻿@model THLTW_B2.Models.Product
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+@{
+    ViewData["Title"] = "Add Product";
+}
+
+<style>
+    /* Container Styling */
+    .form-container {
+        max-width: 600px;
+        margin: 40px auto;
+        padding: 30px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 24px;
+        color:#333;
+    }
+    input[type="file"] {
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        padding: 10px;
+        width: 100%;
+        background-color: white;
+        height: 45px; /* Điều chỉnh chiều cao */
+        display: flex;
+        align-items: center;
+    }
+
+
+    /* Form Styling */
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-control {
+        height: 45px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
+    }
+
+    textarea.form-control {
+        height: 100px;
+        resize: none;
+    }
+
+    label {
+        font-weight: 600;
+        color: #333;
+    }
+
+    .text-danger {
+        font-size: 14px;
+    }
+
+    /* Button Styling */
+    .btn {
+        padding: 10px 15px;
+        font-size: 16px;
+        border-radius: 5px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: white;
+        width: 100%;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+        width: 100%;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+
+    .btn-group-custom {
+        display: flex;
+        gap: 10px;
+    }
+</style>
+
+<div class="form-container">
+    <h1>Add New Product</h1>
+
+    <form asp-action="Add" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="All" class="text-danger text-center mb-3"></div>
+
+        <div class="form-group">
+            <label asp-for="Name">Product Name</label>
+            <input asp-for="Name" class="form-control" placeholder="Enter product name" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Price">Price</label>
+            <input asp-for="Price" class="form-control" placeholder="Enter product price" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Description">Description</label>
+            <textarea asp-for="Description" class="form-control" placeholder="Enter product description"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="CategoryId">Category</label>
+            <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control">
+                <option value="" disabled selected>Choose category</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Upload Product Image</label>
+            <input type="file" name="ImageFile" class="form-control" />
+        </div>
+
+        <div class="btn-group-custom">
+            <button type="submit" class="btn btn-primary">Add Product</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
