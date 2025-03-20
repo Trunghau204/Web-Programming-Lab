@@ -1,0 +1,171 @@
+﻿@model IEnumerable<THLTW_B2.Models.Product>
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<ApplicationUser> SignInManager;
+@inject UserManager<ApplicationUser> UserManager;
+
+@{
+    ViewData["Title"] = "Home Page";
+    var user = User.Identity.IsAuthenticated ? await UserManager.GetUserAsync(User) : null;
+    var roles = user != null ? await UserManager.GetRolesAsync(user) : new List<string>();
+    bool isAdmin = roles.Contains("Admin");
+}
+
+<div class="product-container">
+    <h1 class="page-title">Our Products</h1>
+
+    <div class="product-grid">
+        @foreach (var product in Model)
+        {
+            <div class="product-card">
+                @if (!string.IsNullOrEmpty(product.ImageUrl))
+                {
+                    <img src="@product.ImageUrl" alt="@product.Name" class="product-image" />
+                }
+                else
+                {
+                    <div class="product-image-placeholder">No Image</div>
+                }
+                <div class="product-info">
+                    <h3 class="product-name">@product.Name</h3>
+                    <p class="product-price">@product.Price.ToString("N0") $</p>
+                    <p class="product-description">@product.Description</p>
+                    <div class="btn-container">
+                        <a asp-controller="Product" asp-action="Display" asp-route-id="@product.Id" class="btn btn-primary btn-action">View Details</a>
+                        
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .product-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+    }
+
+    .page-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #1a1a1a;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 25px;
+        padding: 1rem;
+    }
+
+    .product-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .product-image {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+    }
+
+    .product-image-placeholder {
+        width: 100%;
+        height: 220px;
+        background-color: #f5f7fa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #999;
+        font-size: 1rem;
+        font-weight: 500;
+    }
+
+    .product-info {
+        padding: 1.5rem;
+        text-align: center;
+    }
+
+    .product-name {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 0.5rem;
+    }
+
+    .product-price {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #dc3545;
+        margin-bottom: 0.75rem;
+    }
+
+    .product-description {
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 1rem;
+        min-height: 60px;
+        line-height: 1.5;
+    }
+
+    .btn-container {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .btn-action {
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+    }
+
+    .btn-action:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary {
+        background-color: #33CCFF;
+        border: none;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #1a8cff;
+    }
+
+    .btn-warning {
+        background-color: #ffc107;
+        border: none;
+        color: #fff;
+    }
+
+    .btn-warning:hover {
+        background-color: #e0a800;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border: none;
+        color: white;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+    }
+</style>

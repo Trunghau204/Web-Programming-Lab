@@ -1,0 +1,158 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using THLTW_B2.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Lab03.WebsiteBanHang</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Lab03.WebsiteBanHang.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Lab03.WebsiteBanHang.styles.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">Lab03.WebsiteBanHang</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            var user = await UserManager.GetUserAsync(User);
+                            var roles = user != null ? await UserManager.GetRolesAsync(user) : new List<string>();
+
+                            @if (roles.Contains("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Product" asp-action="Index">Products</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Category" asp-action="Index">Categories</a>
+                                </li>
+                            }
+                            else if (roles.Contains("User"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Product" asp-action="Index">Products</a>
+                                </li>
+                            }
+                        }
+                        @await Html.PartialAsync("_LoginPartial")
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <main role="main" class="pb-5">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer modern-footer">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0">© 2025 - Lab03.WebsiteBanHang</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a asp-controller="Home" asp-action="Privacy" class="footer-link">Privacy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f8f9fa;
+        margin: 0;
+    }
+
+    /* Navbar */
+    .custom-navbar {
+        background-color: #33CCFF !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        padding: 1rem 0;
+    }
+
+    .navbar-brand {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #fff !important;
+        transition: color 0.3s ease;
+    }
+
+    .navbar-brand:hover {
+        color: #f0f0f0 !important;
+    }
+
+    .nav-link {
+        color: #fff !important;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        transition: color 0.3s ease;
+    }
+
+    .nav-link:hover {
+        color: #f0f0f0 !important;
+    }
+
+    .navbar-toggler {
+        border: none;
+    }
+
+    .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.9)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+
+    /* Main Container */
+    .main-container {
+        min-height: calc(100vh - 200px);
+        padding: 2rem 0;
+    }
+
+    /* Footer */
+    .modern-footer {
+        background-color: #fff;
+        border-top: 1px solid #ddd;
+        padding: 1.5rem 0;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .modern-footer p {
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    .footer-link {
+        color: #33CCFF;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+
+    .footer-link:hover {
+        color: #1a8cff;
+        text-decoration: underline;
+    }
+</style>    

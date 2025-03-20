@@ -1,0 +1,65 @@
+﻿@model THLTW_B2.Models.Category
+
+@{
+    ViewData["Title"] = "Category Details";
+}
+
+<style>
+    /* Container Styling */
+    .category-details-container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 25px;
+        border-radius: 12px;
+        background: white;
+        box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    h4 {
+        font-size: 18px;
+        color: #555;
+        margin-bottom: 10px;
+    }
+
+    .text-highlight {
+        font-size: 20px;
+        font-weight: bold;
+        color: #007bff;
+    }
+
+    /* Back Button */
+    .btn-back {
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        display: inline-block;
+        margin-top: 20px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-back:hover {
+        background: linear-gradient(135deg, #0056b3, #00408a);
+        transform: scale(1.05);
+    }
+</style>
+
+<div class="category-details-container">
+    <h2>Category Details</h2>
+
+    <h4>ID: <span class="text-highlight">@Model.Id</span></h4>
+    <h4>Category Name: <strong>@Model.Name</strong></h4>
+
+    <a asp-action="Index" class="btn-back">Back to List</a>
+</div>
