@@ -1,0 +1,48 @@
+﻿/* Tùy chỉnh tổng thể */
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+a {
+  color: #00ced1; /* Cyan đậm cho các link */
+}
+
+a:hover {
+  color: #00b7eb; /* Cyan sáng hơn khi hover */
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #00ced1; /* Cyan đậm */
+  border-color: #009b9b;
+}
+
+.btn-primary:hover {
+  background-color: #00b7eb;
+  border-color: #008b8b;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #00ced1;
+  border-color: #009b9b;
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}

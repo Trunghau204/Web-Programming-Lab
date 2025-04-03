@@ -1,0 +1,99 @@
+@model Lab04.WebsiteBanHang.Models.Category
+@{
+    ViewData["Title"] = "Xóa danh mục";
+}
+
+<div class="edit-container">
+    <h2>Delete Category</h2>
+    
+    <p class="delete-message">Are you sure you want to delete this category?</p>
+    <h4 class="category-name">@Model.Name</h4>
+    
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        
+        <div class="button-group">
+            <button type="submit" class="btn btn-delete">Delete</button>
+            <a asp-action="Index" class="btn btn-cancel">Cancel</a>
+        </div>
+    </form>
+</div>
+
+<style>
+    .edit-container {
+        max-width: 800px;
+        margin: 3rem auto;
+        padding: 2rem;
+        border-radius: 20px;
+        background: white;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        border: 1px solid #f0f0f0;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        background: linear-gradient(45deg, #c0392b, #e74c3c);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .delete-message {
+        font-size: 1.2rem;
+        color: #2c3e50;
+        margin-bottom: 1rem;
+    }
+
+    .category-name {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #e74c3c;
+        margin-bottom: 2rem;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        padding: 0.75rem 2rem;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        border: none;
+        color: white;
+        min-width: 150px;
+        justify-content: center;
+    }
+
+    .btn-delete {
+        background: linear-gradient(45deg, #c0392b, #e74c3c);
+    }
+
+    .btn-cancel {
+        background: linear-gradient(45deg, #95a5a6, #7f8c8d);
+    }
+
+    .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        filter: brightness(1.1);
+    }
+</style>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

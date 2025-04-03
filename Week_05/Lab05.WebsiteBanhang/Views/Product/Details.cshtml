@@ -1,0 +1,217 @@
+@model Lab04.WebsiteBanHang.Models.Product
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<div class="product-details-container">
+    <h2>@Model.Name</h2>
+
+    @if (!string.IsNullOrEmpty(Model.ImageUrl) || (Model.Images != null && Model.Images.Any()))
+    {
+        <div id="productImageCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <div class="carousel-item active">
+                        <img src="@Model.ImageUrl" class="d-block w-100 product-image" alt="@Model.Name" />
+                    </div>
+                }
+                @if (Model.Images != null && Model.Images.Any())
+                {
+                    @foreach (var image in Model.Images)
+                    {
+                        <div class="carousel-item @(string.IsNullOrEmpty(Model.ImageUrl) && image == Model.Images.First() ? "active" : "")">
+                            <img src="@image.Url" class="d-block w-100 product-image" alt="@Model.Name" />
+                        </div>
+                    }
+                }
+            </div>
+            @if ((!string.IsNullOrEmpty(Model.ImageUrl) && Model.Images != null && Model.Images.Any()) || (Model.Images != null && Model.Images.Count > 1))
+            {
+                <button class="carousel-control-prev" type="button" data-bs-target="#productImageCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#productImageCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="image-placeholder">No Image Available</div>
+    }
+
+    <div class="product-info">
+        <h4>Name: <span class="info-value">@Model.Name</span></h4>
+        <h4>Price: <span class="text-price">$@Model.Price.ToString("N0")</span></h4>
+        <h4>Description: <span class="info-value">@(Model.Description ?? "No description")</span></h4>
+        <h4>Category: <span class="info-value">@(Model.Category?.Name ?? "N/A")</span></h4>
+    </div>
+
+    <div class="button-group">
+        <a asp-action="Index" class="btn btn-back"><i class="bi bi-arrow-left"></i> Back to List</a>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-back"><i class="bi bi-arrow-left"></i> Back to Home</a>
+    </div>
+</div>
+
+<style>
+    /* Container Styling */
+    .product-details-container {
+        max-width: 800px;
+        margin: 3rem auto;
+        padding: 2rem;
+        border-radius: 15px; /* Đồng bộ với border-radius của product-card, table-custom, và edit-container */
+        background: white;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Đồng bộ với box-shadow */
+        border: 1px solid #f0f0f0;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        background: linear-gradient(45deg, #2c3e50, #3498db); /* Gradient giống trong Index, ProductList, và Edit */
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 2rem;
+    }
+
+    /* Image Styling */
+    .product-image {
+        width: 100%;
+        max-height: 400px;
+        object-fit: contain; /* Đồng bộ với product-image trong Index, ProductList, và Edit */
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+    }
+
+    .carousel-inner {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .carousel-item:hover .product-image {
+        transform: scale(1.05); /* Hiệu ứng giống trong Index, ProductList, và Edit */
+    }
+
+    .image-placeholder {
+        width: 100%;
+        height: 400px;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); /* Gradient giống trong Index, ProductList, và Edit */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #666;
+        font-size: 1.1rem;
+        font-weight: 500;
+        border-radius: 10px;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Carousel Controls */
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(45deg, #3498db, #2980b9); /* Gradient giống nút điều hướng của Swiper trong Index */
+        color: #fff; /* Màu icon */
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease; /* Hiệu ứng mượt mà */
+        opacity: 0.8; /* Độ trong suốt ban đầu */
+        margin: 0 20px; /* Khoảng cách từ mép */
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .carousel-control-prev:hover,
+    .carousel-control-next:hover {
+        background: linear-gradient(45deg, #2980b9, #3498db); /* Đảo gradient khi hover */
+        opacity: 1;
+        transform: translateY(-50%) scale(1.1); /* Phóng to nhẹ khi hover */
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Thêm bóng */
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        background-image: none; /* Loại bỏ icon mặc định của Bootstrap */
+        font-family: 'bootstrap-icons'; /* Sử dụng Bootstrap Icons */
+        font-size: 20px; /* Kích thước icon giống trong Swiper */
+    }
+
+    .carousel-control-prev-icon::before {
+        content: '\f284'; /* Icon "chevron-left" từ Bootstrap Icons */
+    }
+
+    .carousel-control-next-icon::before {
+        content: '\f285'; /* Icon "chevron-right" từ Bootstrap Icons */
+    }
+
+    /* Product Info Styling */
+    .product-info {
+    display: block; /* Đưa các phần tử về dạng khối để hiển thị thành cột */
+    text-align: left;
+    margin-top: 20px;
+    }
+
+    .product-info h4 {
+        font-size: 1.1rem;
+        color: #7f8c8d;
+        font-weight: 500;
+        margin-bottom: 10px; /* Khoảng cách giữa các dòng */
+    }
+
+    .info-value {
+        font-weight: 700;
+        color: #2c3e50;
+        display: inline-block; /* Để giữ nội dung nằm cùng hàng với label */
+    }
+
+    .text-price {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #2c3e50;
+        background: #fff5f5;
+        padding: 0.25rem 1rem;
+        border-radius: 20px;
+        display: inline-block;
+    }
+
+    /* Button Styling */
+    .button-group {
+        display: flex;
+        gap: 10px; /* Khoảng cách giống trong Index, ProductList, và Edit */
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 2rem;
+    }
+
+    .btn-back {
+        padding: 0.5rem 1.2rem; /* Kích thước giống trong Index, ProductList, và Edit */
+        border-radius: 20px; /* Bo góc giống trong Index, ProductList, và Edit */
+        font-size: 0.85rem; /* Kích thước chữ giống trong Index, ProductList, và Edit */
+        font-weight: 600;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: all 0.3s ease; /* Hiệu ứng giống trong Index, ProductList, và Edit */
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        border: none;
+        color: white;
+        background: linear-gradient(45deg, #3498db, #2980b9); /* Gradient giống trong Index, ProductList, và Edit */
+        min-width: 150px;
+        justify-content: center;
+    }
+
+    .btn-back:hover {
+        transform: translateY(-3px); /* Hiệu ứng nâng lên giống trong Index, ProductList, và Edit */
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Bóng giống trong Index, ProductList, và Edit */
+        filter: brightness(1.1); /* Hiệu ứng sáng lên giống trong Index, ProductList, và Edit */
+    }
+</style>

@@ -1,0 +1,195 @@
+@model List<Lab04.WebsiteBanHang.Models.Category>
+
+@{
+    ViewData["Title"] = "Category List";
+}
+
+<div class="container-custom">
+    <div class="header-section">
+        <h2>Category List</h2>
+        <a asp-action="Create" class="btn btn-create"> Add Category</a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="table-responsive">
+        <table class="table-custom">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model == null || !Model.Any())
+                {
+                    <tr>
+                        <td colspan="2" class="text-muted">No categories available.</td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var category in Model)
+                    {
+                        <tr>
+                            <td class="category-name">@category.Name</td>
+                            <td class="action-buttons">
+                                <a asp-action="Edit" asp-route-id="@category.Id" class="btn btn-edit"> Edit</a>
+                                <a asp-action="Delete" asp-route-id="@category.Id" class="btn btn-delete"> Delete</a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    /* General Styling */
+    body {
+        background: #f5f7fa;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .container-custom {
+        max-width: 1280px;
+        margin: 3rem auto;
+        padding: 0 1rem;
+    }
+
+    .header-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2.5rem;
+    }
+
+    h2 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        background: linear-gradient(45deg, #3498db, #2980b9);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    /* Table Styling */
+    .table-custom {
+        width: 100%;
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        border-collapse: separate;
+    }
+
+    .table-custom thead {
+        background: linear-gradient(45deg, #3498db, #2980b9);
+        color: white;
+    }
+
+    .table-custom th {
+        padding: 1.5rem;
+        text-align: center;
+        font-weight: 700;
+        font-size: 1rem;
+        text-transform: uppercase;
+    }
+
+    .table-custom td {
+        padding: 1.5rem;
+        text-align: center;
+        vertical-align: middle;
+        border-top: 1px solid #f0f0f0;
+    }
+
+    .table-custom tbody tr {
+        transition: all 0.3s ease;
+    }
+
+    .table-custom tbody tr:hover {
+        background: #f8fafc;
+        transform: translateY(-2px);
+    }
+
+    /* Text Styling */
+    .category-name {
+        font-weight: 700;
+        color: #2c3e50;
+        font-size: 1.1rem;
+    }
+
+    .text-muted {
+        color: #7f8c8d;
+        font-size: 0.95rem;
+    }
+
+    /* Button Styling */
+    .btn {
+        padding: 0.6rem 1.5rem;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        border: none;
+        color: white;
+    }
+
+    .btn-create {
+        background: linear-gradient(45deg, #3498db, #2980b9);
+    }
+
+    .btn-edit {
+        background: linear-gradient(45deg, #f1c40f, #e67e22);
+    }
+
+    .btn-delete {
+        background: linear-gradient(45deg, #e74c3c, #c0392b);
+    }
+
+    .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        filter: brightness(1.1);
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    /* Alert Styling */
+    .alert {
+        border-radius: 10px;
+        margin-bottom: 1.5rem;
+    }
+
+    .alert-success {
+        background: #dff0d8;
+        color: #2ecc71;
+    }
+
+    .alert-danger {
+        background: #f2dede;
+        color: #e74c3c;
+    }
+</style>

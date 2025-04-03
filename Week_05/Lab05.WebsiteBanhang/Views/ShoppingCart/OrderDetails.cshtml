@@ -1,0 +1,132 @@
+@model Lab04.WebsiteBanHang.Models.Order
+
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<div class="order-details-container">
+    <h2>Order Details</h2>
+    <div class="order-info">
+        <p><strong>Order ID:</strong> @Model.Id</p>
+        <p><strong>Date:</strong> @Model.OrderDate.ToString("dd/MM/yyyy HH:mm")</p>
+        <p><strong>Shipping Address:</strong> @Model.ShippingAddress</p>
+        <p><strong>Notes:</strong> @Model.Notes</p>
+    </div>
+
+    <table class="modern-table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var detail in Model.OrderDetails)
+            {
+                <tr>
+                    <td>@detail.Product.Name</td>
+                    <td>@detail.Quantity</td>
+                    <td>@detail.Price.ToString("N0")$</td>
+                    <td>@(detail.Price * detail.Quantity)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a asp-action="Index" asp-controller="ShoppingCart" class="btn modern-btn btn-secondary">Back to Cart</a>
+</div>
+
+<style>
+    /* Order details container */
+    .order-details-container {
+        background: #fff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        max-width: 800px;
+        margin: 40px auto;
+        transition: all 0.3s ease;
+    }
+
+    /* Heading */
+    h2 {
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 30px;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    /* Order info */
+    .order-info p {
+        font-size: 16px;
+        color: #34495e;
+        margin: 10px 0;
+        line-height: 1.5;
+    }
+
+    .order-info strong {
+        color: #2c3e50;
+        font-weight: 600;
+    }
+
+    /* Modern table styles */
+    .modern-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 10px;
+        margin-top: 20px;
+    }
+
+    .modern-table thead th {
+        background: linear-gradient(135deg, #3498db, #2980b9);
+        color: #fff;
+        padding: 15px;
+        text-align: center;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .modern-table tbody tr {
+        background: #f9f9f9;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .modern-table tbody tr:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .modern-table tbody td {
+        padding: 15px;
+        text-align: center;
+        color: #34495e;
+    }
+
+    /* Button styles */
+    .modern-btn {
+        padding: 12px;
+        border-radius: 25px;
+        font-size: 16px;
+        font-weight: 500;
+        width: 100%;
+        transition: all 0.3s ease;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        border: none;
+        display: block;
+        text-align: center;
+    }
+
+    .btn-secondary {
+        background: #7f8c8d;
+    }
+
+    .btn-secondary:hover {
+        background: #6c757d;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(127, 140, 141, 0.3);
+    }
+</style>

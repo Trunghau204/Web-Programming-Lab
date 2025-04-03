@@ -1,0 +1,168 @@
+@model Lab04.WebsiteBanHang.Models.Product
+@{
+    ViewData["Title"] = "Thêm sản phẩm";
+}
+
+<div class="form-container">
+    <h1>Add New Product</h1>
+
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="All" class="text-danger text-center"></div>
+
+        <div class="form-group">
+            <label asp-for="Name" class="form-label">Product Name</label>
+            <input asp-for="Name" class="form-control" placeholder="Nhập tên sản phẩm" required />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Price" class="form-label">Price</label>
+            <input asp-for="Price" type="number" class="form-control" placeholder="Nhập giá sản phẩm" required />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Description" class="form-label">Description</label>
+            <textarea asp-for="Description" class="form-control" rows="4" placeholder="Nhập mô tả sản phẩm"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="CategoryId" class="form-label">Categories</label>
+            <select asp-for="CategoryId" asp-items="@((SelectList)ViewData["CategoryId"])" class="form-select" required>
+                <option value="" disabled selected>-- Choose Categories --</option>
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Product Image</label>
+            <input type="file" name="images" multiple class="form-control" accept="image/*" />
+            <small class="text-muted">You can select multiple photos at once</small>
+        </div>
+
+        <div class="button-group">
+            <button type="submit" class="btn btn-save"> Add</button>
+            <a asp-action="Index" class="btn btn-cancel"> Cancel</a>
+        </div>
+    </form>
+</div>
+
+<style>
+    /* Container Styling */
+    .form-container {
+        max-width: 800px;
+        margin: 3rem auto;
+        padding: 2rem;
+        border-radius: 15px; /* Đồng bộ với border-radius của product-card, table-custom, edit-container, product-details-container, và delete-container */
+        background: white;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Đồng bộ với box-shadow */
+        border: 1px solid #f0f0f0;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        background: linear-gradient(45deg, #2c3e50, #3498db); /* Gradient giống trong Index, ProductList, Edit, Details, và Delete */
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    /* Form Styling */
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        font-weight: 700;
+        color: #2c3e50; /* Màu giống trong Index, ProductList, Edit, Details, và Delete */
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+
+    .form-control, .form-select {
+        border-radius: 10px;
+        border: 1px solid #e0e0e0;
+        padding: 0.75rem 1rem;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        width: 100%;
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: #3498db; /* Màu viền khi focus giống trong Index, ProductList, Edit, Details, và Delete */
+        box-shadow: 0 0 10px rgba(52, 152, 219, 0.2);
+        outline: none;
+    }
+
+    textarea.form-control {
+        height: 120px;
+        resize: vertical;
+    }
+
+    input[type="file"] {
+        padding: 0.65rem 1rem; /* Adjusted for better alignment */
+    }
+
+    .text-danger {
+        font-size: 0.85rem; /* Kích thước giống trong Index, ProductList, Edit, Details, và Delete */
+        margin-top: 0.25rem;
+    }
+
+    /* Button Styling */
+    .button-group {
+        display: flex;
+        gap: 10px; /* Khoảng cách giống trong Index, ProductList, Edit, Details, và Delete */
+        justify-content: center;
+        margin-top: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        padding: 0.5rem 1.2rem; /* Kích thước giống trong Index, ProductList, Edit, Details, và Delete */
+        border-radius: 20px; /* Bo góc giống trong Index, ProductList, Edit, Details, và Delete */
+        font-size: 0.85rem; /* Kích thước chữ giống trong Index, ProductList, Edit, Details, và Delete */
+        font-weight: 600;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: all 0.3s ease; /* Hiệu ứng giống trong Index, ProductList, Edit, Details, và Delete */
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        border: none;
+        color: white;
+        min-width: 150px;
+        justify-content: center;
+    }
+
+    .btn-save {
+        background: linear-gradient(45deg, #2ecc71, #27ae60); /* Gradient xanh lá giống nút Create trong ProductList, Edit */
+    }
+
+    .btn-cancel {
+        background: linear-gradient(45deg, #95a5a6, #7f8c8d); /* Gradient xám giống trong ProductList, Edit, Details, và Delete */
+    }
+
+    .btn:hover {
+        transform: translateY(-3px); /* Hiệu ứng nâng lên giống trong Index, ProductList, Edit, Details, và Delete */
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Bóng giống trong Index, ProductList, Edit, Details, và Delete */
+        filter: brightness(1.1); /* Hiệu ứng sáng lên giống trong Index, ProductList, Edit, Details, và Delete */
+    }
+
+    /* Miscellaneous */
+    .text-muted {
+        color: #7f8c8d; /* Màu giống trong Index, ProductList, Edit, Details, và Delete */
+        font-size: 0.85rem; /* Kích thước giống trong Index, ProductList, Edit, Details, và Delete */
+    }
+
+    small.text-muted {
+        display: block;
+        margin-top: 0.25rem;
+    }
+</style>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

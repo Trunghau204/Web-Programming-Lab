@@ -1,136 +1,136 @@
-﻿@model THLTW_B2.Models.Product
-@using Microsoft.AspNetCore.Mvc.Rendering
+﻿    @model THLTW_B2.Models.Product
+    @using Microsoft.AspNetCore.Mvc.Rendering
 
-@{
-    ViewData["Title"] = "Edit Product";
-}
-
-<style>
-    .edit-container {
-        max-width: 600px;
-        margin: 50px auto;
-        padding: 25px;
-        border-radius: 12px;
-        background: white;
-        box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
-    }
-    select.form-control {
-        height: 45px; /* Tăng chiều cao */
-        padding: 10px; /* Tạo khoảng cách cho chữ hiển thị đầy đủ */
-        font-size: 16px; /* Đảm bảo chữ rõ ràng */
-        border-radius: 8px;
+    @{
+        ViewData["Title"] = "Edit Product";
     }
 
-    h1 {
-        font-size: 24px;
-        font-weight: bold;
-        text-align: center;
-        color: #333;
-        margin-bottom: 20px;
-    }
-    input[type="file"] {
-        border-radius: 8px;
-        border: 1px solid #ddd;
-        padding: 10px;
-        width: 100%;
-        background-color: white;
-        height: 45px; /* Điều chỉnh chiều cao */
-        display: flex;
-        align-items: center;
-    }
+    <style>
+        .edit-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 25px;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        select.form-control {
+            height: 45px; /* Tăng chiều cao */
+            padding: 10px; /* Tạo khoảng cách cho chữ hiển thị đầy đủ */
+            font-size: 16px; /* Đảm bảo chữ rõ ràng */
+            border-radius: 8px;
+        }
 
-    .form-group label {
-        font-weight: bold;
-        color: #555;
-    }
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        input[type="file"] {
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            width: 100%;
+            background-color: white;
+            height: 45px; /* Điều chỉnh chiều cao */
+            display: flex;
+            align-items: center;
+        }
 
-    .form-control {
-        border-radius: 8px;
-        border: 1px solid #ddd;
-        padding: 10px;
-        transition: all 0.3s ease;
-    }
+        .form-group label {
+            font-weight: bold;
+            color: #555;
+        }
 
-    .form-control:focus {
-        border-color: #007bff;
-        box-shadow: 0px 0px 10px rgba(0, 123, 255, 0.2);
-    }
+        .form-control {
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            transition: all 0.3s ease;
+        }
 
-    .btn-primary {
-        background: linear-gradient(135deg, #007bff, #0056b3);
-        border: none;
-        padding: 12px;
-        width: 100%;
-        border-radius: 8px;
-        font-weight: bold;
-        transition: all 0.3s ease;
-    }
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0px 0px 10px rgba(0, 123, 255, 0.2);
+        }
 
-    .btn-primary:hover {
-        background: linear-gradient(135deg, #0056b3, #00408a);
-        transform: scale(1.05);
-    }
+        .btn-primary {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
 
-    .btn-secondary {
-        background: #6c757d;
-        color: white;
-        border: none;
-        padding: 12px;
-        width: 100%;
-        border-radius: 8px;
-        font-weight: bold;
-        transition: all 0.3s ease;
-        margin-top: 10px;
-        display: block;
-        text-align: center;
-    }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #0056b3, #00408a);
+            transform: scale(1.05);
+        }
 
-    .btn-secondary:hover {
-        background: #545b62;
-        transform: scale(1.05);
-    }
-</style>
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            display: block;
+            text-align: center;
+        }
 
-<div class="edit-container">
-    <h1>Edit Product</h1>
+        .btn-secondary:hover {
+            background: #545b62;
+            transform: scale(1.05);
+        }
+    </style>
 
-    <form asp-action="Update" method="post" enctype="multipart/form-data">
-        <input type="hidden" asp-for="Id" />
-        <input type="hidden" asp-for="ImageUrl" /> <!-- Keep old image -->
+    <div class="edit-container">
+        <h1>Edit Product</h1>
 
-        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+        <form asp-action="Update" method="post" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="ImageUrl" /> <!-- Keep old image -->
 
-        <div class="form-group mb-3">
-            <label asp-for="Name" class="form-label">Product Name</label>
-            <input asp-for="Name" class="form-control" required />
-            <span asp-validation-for="Name" class="text-danger"></span>
-        </div>
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
 
-        <div class="form-group mb-3">
-            <label asp-for="Price" class="form-label">Price</label>
-            <input asp-for="Price" type="number" class="form-control" required />
-            <span asp-validation-for="Price" class="text-danger"></span>
-        </div>
+            <div class="form-group mb-3">
+                <label asp-for="Name" class="form-label">Product Name</label>
+                <input asp-for="Name" class="form-control" required />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
 
-        <div class="form-group mb-3">
-            <label asp-for="Description" class="form-label">Description</label>
-            <textarea asp-for="Description" class="form-control"></textarea>
-            <span asp-validation-for="Description" class="text-danger"></span>
-        </div>
+            <div class="form-group mb-3">
+                <label asp-for="Price" class="form-label">Price</label>
+                <input asp-for="Price" type="number" class="form-control" required />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
 
-        <div class="form-group mb-3">
-            <label for="CategoryId" class="form-label">Category</label>
-            <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control" required>
-                <option value="">-- Select Category --</option>
-            </select>
-        </div>
+            <div class="form-group mb-3">
+                <label asp-for="Description" class="form-label">Description</label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
 
-        <div class="form-group mb-3">
-            <label class="form-label">Upload New Image</label>
-            <input type="file" name="ImageFile" class="form-control" accept="image/*" />
-        </div>
+            <div class="form-group mb-3">
+                <label for="CategoryId" class="form-label">Category</label>
+                <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control" required>
+                    <option value="">-- Select Category --</option>
+                </select>
+            </div>
 
-        <button type="submit" class="btn btn-primary">Update Product</button>
-        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
-    </form>
-</div>
+            <div class="form-group mb-3">
+                <label class="form-label">Upload New Image</label>
+                <input type="file" name="ImageFile" class="form-control" accept="image/*" />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Update Product</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>

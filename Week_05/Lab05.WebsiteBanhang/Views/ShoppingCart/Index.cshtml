@@ -1,0 +1,219 @@
+@model Lab04.WebsiteBanHang.Models.ShoppingCart
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger modern-alert">@TempData["Error"]</div>
+}
+
+<div class="cart-container">
+    <h2>Your Cart</h2>
+    @if (Model.Items.Any())
+    {
+        <table class="modern-table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Price.ToString("N0")$</td>
+                        <td>@(item.Price * item.Quantity)</td>
+                        <td>
+                            <form asp-action="RemoveFromCart" method="post">
+                                <input type="hidden" name="productId" value="@item.ProductId" />
+                                <button type="submit" class="btn modern-btn btn-danger">Remove</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="cart-footer">
+            <h4>Total: @Model.Items.Sum(i => i.Price * i.Quantity).ToString("N0")$</h4>
+            <a asp-action="Checkout" class="btn modern-btn btn-success">Proceed to Checkout</a>
+        </div>
+    }
+    else
+    {
+        <p class="empty-message">Your cart is empty.</p>
+    }
+</div>
+
+<!-- Dấu gạch ngang phân cách -->
+<hr class="modern-divider" />
+
+<div class="orders-container">
+    <h2>Your Orders</h2>
+    @if (ViewBag.Orders != null && ((List<Lab04.WebsiteBanHang.Models.Order>)ViewBag.Orders).Any())
+    {
+        <table class="modern-table">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Order Date</th>
+                    <th>Total Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in (List<Lab04.WebsiteBanHang.Models.Order>)ViewBag.Orders)
+                {
+                    <tr>
+                        <td>@order.Id</td>
+                        <td>@order.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>@order.TotalPrice.ToString("N0")$</td>
+                        <td>
+                            <a asp-action="OrderDetails" asp-route-id="@order.Id" class="btn modern-btn btn-primary">View Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p class="empty-message">You have no orders yet.</p>
+    }
+</div>
+
+<style>
+    /* Container styles */
+    .cart-container, .orders-container {
+        background: #fff;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        margin: 20px auto;
+        max-width: 1200px;
+        transition: all 0.3s ease;
+    }
+
+    /* Heading styles */
+    h2 {
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 25px;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    /* Modern table styles */
+    .modern-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 10px;
+    }
+
+    .modern-table thead th {
+        background: linear-gradient(135deg, #3498db, #2980b9);
+        color: #fff;
+        padding: 15px;
+        text-align: center;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .modern-table tbody tr {
+        background: #f9f9f9;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .modern-table tbody tr:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .modern-table tbody td {
+        padding: 15px;
+        text-align: center;
+        color: #34495e;
+    }
+
+    /* Button styles */
+    .modern-btn {
+        padding: 8px 16px;
+        border-radius: 25px;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-danger {
+        background: #e74c3c;
+        border: none;
+    }
+
+    .btn-danger:hover {
+        background: #c0392b;
+        transform: translateY(-2px);
+    }
+
+    .btn-primary {
+        background: #3498db;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background: #2980b9;
+        transform: translateY(-2px);
+    }
+
+    .btn-success {
+        background: #2ecc71;
+        border: none;
+    }
+
+    .btn-success:hover {
+        background: #27ae60;
+        transform: translateY(-2px);
+    }
+
+    /* Cart footer */
+    .cart-footer {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .cart-footer h4 {
+        font-size: 22px;
+        font-weight: 600;
+        color: #e74c3c;
+        margin-right: 20px;
+    }
+
+    /* Empty message */
+    .empty-message {
+        text-align: center;
+        color: #7f8c8d;
+        font-style: italic;
+    }
+
+    /* Modern divider */
+    .modern-divider {
+        border: 0;
+        height: 3px;
+        width: 60%;
+        background: linear-gradient(to right, transparent, #3498db, transparent);
+        margin: 40px auto;
+    }
+
+    /* Alert */
+    .modern-alert {
+        border-radius: 10px;
+        padding: 15px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    }
+</style>
